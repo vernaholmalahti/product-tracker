@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import { deviceRoutes } from "./deviceRoutes";
 import { healthRoutes } from "./healthRoutes";
 import { marketRoutes } from "./marketRoutes";
 import { productRoutes } from "./productRoutes";
@@ -22,6 +23,7 @@ export function createApp() {
   app.use(healthRoutes);
   app.use(productRoutes);
   app.use(marketRoutes);
+  app.use(deviceRoutes);
 
   return app;
 }

@@ -6,6 +6,12 @@ node_modules/
 .env.*
 !.env.example
 
+# Firebase / Google service account keys are SECRET (they let a server send pushes
+# as you). Upload them to EAS, never commit them. google-services.json is NOT secret
+# (it only identifies the app) and EAS Build needs it in the repo.
+*service-account*.json
+*-firebase-adminsdk-*.json
+
 # Build output
 dist/
 build/

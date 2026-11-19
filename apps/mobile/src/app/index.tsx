@@ -1,58 +1,88 @@
-import { useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
-import { MarketFilterBar } from "@/components/MarketFilterBar";
-import { ProductCard } from "@/components/ProductCard";
-import { ErrorView, LoadingView } from "@/components/StatusViews";
-import { ALL_MARKETS, describeFilter, filterProducts, type MarketFilter } from "@/content/marketFilter";
+import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { BROWSE_CATEGORIES, productsInCategory } from "@/content/categories";
 import { useProducts } from "@/hooks/useProducts";
 import { colors, fonts, spacing } from "@/theme";
 
-// Home screen (route "/"): list of all tracked products, with a market filter.
+// Landing screen (route "/"): choose what to browse.
 export default function HomeScreen() {
-  const { products, markets, loading, error, reload } = useProducts();
-  const [filter, setFilter] = useState<MarketFilter>(ALL_MARKETS);
-  const visibleProducts = filterProducts(products, filter);
+  // Only used for the product counts. The cards work even if the server is down.
+  const { products, loading } = useProducts();
 
-  // First load: nothing to show yet.
-  if (loading && products.length === 0) return <LoadingView />;
-
-  // Server unreachable or error, and no older data to show.
-  if (error && products.length === 0) return <ErrorView message={error} onRetry={reload} />;
-
-  // FlatList only draws the rows that are on screen – it stays fast with many products.
   return (
-    <FlatList
-      data={visibleProducts}
-      keyExtractor={(product) => product.slug}
-      renderItem={({ item }) => <ProductCard product={item} />}
-      contentContainerStyle={styles.list}
-      ItemSeparatorComponent={() => <View style={{ height: spacing.md }} />}
-      ListHeaderComponent={
-        <>
-          <Text style={styles.intro}>
-            Follow new foods and supplement ingredients from lab to shop shelf.
-          </Text>
-          <MarketFilterBar markets={markets} value={filter} onChange={setFilter} />
-        </>
-      }
-      ListEmptyComponent={
-        <Text style={styles.intro}>No products tracked in {describeFilter(filter, markets)} yet.</Text>
-      }
-      // Pull down to refresh
-      refreshControl={<RefreshControl refreshing={loading} onRefresh={reload} tintColor={colors.plum} />}
-    />
+    <ScrollView contentContainerStyle={styles.content}>
+      <Text style={styles.intro}>
+        Follow new foods and supplement ingredients from lab to shop shelf.
+      </Text>
+
+      {BROWSE_CATEGORIES.map(({ category, slug, title, description }) => {
+        const count = productsInCategory(products, category).length;
+        return (
+          <Link key={slug} href={{ pathname: "/browse/[category]", params: { category: slug } }} asChild>
+            <Pressable style={styles.card} accessibilityRole="link">
+              <View style={styles.cardText}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.description}>{description}</Text>
+                {!loading && products.length > 0 && (
+                  <Text style={styles.count}>
+                    {count} {count === 1 ? "product" : "products"}
+                  </Text>
+                )}
+              </View>
+              <Text style={styles.arrow}>→</Text>
+            </Pressable>
+          </Link>
+        );
+      })}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  list: {
+  content: {
     padding: spacing.lg,
+    gap: spacing.lg,
   },
   intro: {
     fontFamily: fonts.regular,
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 17,
+    lineHeight: 24,
     color: colors.mutedText,
-    marginBottom: spacing.lg,
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.card,
+    borderRadius: 20,
+    padding: spacing.xl,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  cardText: {
+    flex: 1, // take all space except the arrow
+    gap: spacing.xs,
+  },
+  title: {
+    fontFamily: fonts.bold,
+    fontSize: 24,
+    color: colors.plum,
+  },
+  description: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
+    lineHeight: 21,
+    color: colors.plum,
+  },
+  count: {
+    fontFamily: fonts.semiBold,
+    fontSize: 13,
+    color: colors.mutedText,
+    marginTop: spacing.xs,
+  },
+  arrow: {
+    fontFamily: fonts.bold,
+    fontSize: 24,
+    color: colors.ripe, // main accent colour
+    marginLeft: spacing.md,
   },
 });

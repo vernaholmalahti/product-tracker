@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38238552976",
+    "project_id": "ripe-7142a",
+    "storage_bucket": "ripe-7142a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38238552976:android:cb6fc8eef55ce9aafca915",
+        "android_client_info": {
+          "package_name": "io.github.vernaholmalahti.ripe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG23lncIJl9gU66511z0ba3aqg_uNBvYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

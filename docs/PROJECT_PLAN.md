@@ -21,6 +21,7 @@ Claude Code: tick the boxes as steps are finished.
 **Demo:** API returns Solein with its EU, US and Singapore timelines.
 
 ## Phase 2 – Consumer app (read-only)
+- [x] Landing screen: browse Novel foods or Supplements
 - [x] Product list screen (name, category, short status per market)
 - [x] Product detail screen with a vertical timeline per market
 - [x] Each stage shows date, source link and "last checked" date
@@ -30,7 +31,7 @@ Claude Code: tick the boxes as steps are finished.
 **Demo:** browse Solein and NMN on a phone.
 
 ## Phase 3 – Follow + push notifications
-- [ ] Anonymous device ID (no login needed for consumers at first)
+- [x] Anonymous device ID (no login needed for consumers at first)
 - [ ] Register Expo push token with the server
 - [ ] Follow / unfollow a product
 - [ ] Server function `notifyFollowers(productId, message)`
