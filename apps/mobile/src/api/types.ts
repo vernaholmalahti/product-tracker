@@ -53,6 +53,26 @@ export type ProductSummary = {
   markets: MarketStatus[];
 };
 
-export type ProductDetail = Omit<ProductSummary, "markets"> & {
+// GET /admin/pending-updates (server/src/api/adminRoutes.ts)
+export type PendingUpdate = {
+  id: string;
+  product: { slug: string; name: string; category: Category };
+  marketCode: string;
+  marketName: string;
+  currentStage: Stage;
+  proposedStage: Stage;
+  eventDate: string | null; // "YYYY-MM-DD"
+  eventDatePrecision: DatePrecision;
+  title: string;
+  summary: string;
+  sourceUrl: string;
+  sourceType: SourceType;
+  evidenceQuote: string;
+  confidence: number | null; // 0–1, AI updates only
+  origin: "SOURCE_CHECK" | "AI_SEARCH";
+  createdAt: string;
+};
+
+export type ProductDetail =Omit<ProductSummary, "markets"> & {
   markets: (MarketStatus & { events: StatusEvent[] })[];
 };

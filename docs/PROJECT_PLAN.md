@@ -41,10 +41,10 @@ Claude Code: tick the boxes as steps are finished.
 
 ## Phase 4 – Admin review (web page)
 The admin side is a **web page**: reviewing sources and reading quotes is easier on a computer. It is built with Expo for web from the same codebase, so it also works in a phone's browser.
-- [ ] Simple admin login (one admin account, password hash in DB, or an admin token in `.env` for the first version)
-- [ ] Admin web page: list of `PendingUpdate`s with source link, quote and proposed stage, laid out for a desktop browser
-- [ ] Approve → creates a `StatusEvent`, updates the product, sends notifications
-- [ ] Reject → marks the update as rejected with a reason
+- [x] Simple admin login (one admin account, password hash in DB, or an admin token in `.env` for the first version)
+- [x] Admin web page: list of `PendingUpdate`s with source link, quote and proposed stage, laid out for a desktop browser
+- [x] Approve → creates a `StatusEvent`, updates the product, sends notifications
+- [x] Reject → marks the update as rejected with a reason
 
 **Demo:** create a fake pending update, approve it in the browser, phone gets notified.
 

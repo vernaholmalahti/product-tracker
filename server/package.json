@@ -9,7 +9,9 @@
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate",
-    "notify:status": "tsx scripts/notifyStatus.ts"
+    "notify:status": "tsx scripts/notifyStatus.ts",
+    "pending:fake": "tsx scripts/fakePending.ts",
+    "test-data:clean": "tsx scripts/cleanTestData.ts"
   },
   "type": "commonjs",
   "dependencies": {

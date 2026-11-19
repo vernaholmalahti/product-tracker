@@ -25,4 +25,13 @@ function requireEnv(name: string): string {
 export const config = {
   port: Number(process.env.PORT ?? 4000),
   databaseUrl: requireEnv("DATABASE_URL"),
+  adminToken: requireEnv("ADMIN_TOKEN"), // protects /admin/* routes (Phase 4)
 };
+
+// The placeholder from .env.example is fine on your laptop, but never in production.
+if (config.adminToken === "change-me") {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("ADMIN_TOKEN is still the placeholder 'change-me'. Set a long random value.");
+  }
+  console.warn("⚠️  ADMIN_TOKEN is the placeholder 'change-me' – fine for local development only.");
+}

@@ -1,9 +1,31 @@
 import { API_URL } from "./config";
 import type { Market, ProductDetail, ProductSummary } from "./types";
 
+// An error answer from our API. `status` lets callers react to e.g. 401 (wrong admin token).
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
+  }
+}
+
+// Reads the server's { error: "..." } message if there is one.
+async function errorMessage(response: Response, path: string): Promise<string> {
+  try {
+    const body = (await response.json()) as { error?: string };
+    if (body.error) return body.error;
+  } catch {
+    // not JSON – fall through
+  }
+  return `Server answered ${response.status} for ${path}`;
+}
+
 // Sends a request to our API. Throws a readable error if the server is down
 // or answers with an error status, so screens can show a message.
-async function request(path: string, init?: RequestInit): Promise<Response> {
+// Exported for the admin client, which adds its token header.
+export async function request(path: string, init?: RequestInit): Promise<Response> {
   let response: Response;
   try {
     response = await fetch(`${API_URL}${path}`, init);
@@ -11,7 +33,7 @@ async function request(path: string, init?: RequestInit): Promise<Response> {
     throw new Error(`Can't reach the Ripe server at ${API_URL}. Is it running?`);
   }
   if (!response.ok) {
-    throw new Error(`Server answered ${response.status} for ${path}`);
+    throw new ApiError(await errorMessage(response, path), response.status);
   }
   return response;
 }
