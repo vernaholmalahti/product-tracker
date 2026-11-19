@@ -31,6 +31,25 @@ async function sendJson(method: "POST" | "DELETE", path: string, body: unknown):
   });
 }
 
+// ─── Follows ────────────────────────────────────────────────────────────────
+// marketCode is left out = follow the whole product (all markets).
+
+export type FollowInfo = { productSlug: string; marketCode: string | null };
+
+export function getFollows(deviceId: string): Promise<FollowInfo[]> {
+  return fetchJson<FollowInfo[]>(`/devices/${encodeURIComponent(deviceId)}/follows`);
+}
+
+export function followProduct(deviceId: string, productSlug: string): Promise<void> {
+  return sendJson("POST", "/follows", { deviceId, productSlug });
+}
+
+export function unfollowProduct(deviceId: string, productSlug: string): Promise<void> {
+  return sendJson("DELETE", "/follows", { deviceId, productSlug });
+}
+
+// ─── Devices ────────────────────────────────────────────────────────────────
+
 // expoPushToken is optional: sent once the user has allowed notifications.
 export function registerDevice(id: string, expoPushToken?: string): Promise<void> {
   return sendJson("POST", "/devices", { id, expoPushToken });

@@ -33,8 +33,8 @@ Claude Code: tick the boxes as steps are finished.
 ## Phase 3 – Follow + push notifications
 - [x] Anonymous device ID (no login needed for consumers at first)
 - [ ] Register Expo push token with the server
-- [ ] Follow / unfollow a product
-- [ ] Server function `notifyFollowers(productId, message)`
+- [x] Follow / unfollow a product
+- [x] Server function `notifyFollowers(productId, message)`
 - [ ] Test by changing a status manually in the database
 
 **Demo:** change a status → phone gets a notification.

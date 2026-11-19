@@ -1,5 +1,6 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FollowButton } from "@/components/FollowButton";
 import { MarketTimeline } from "@/components/MarketTimeline";
 import { ErrorView, LoadingView } from "@/components/StatusViews";
 import { SupplementDisclaimer } from "@/components/SupplementDisclaimer";
@@ -26,6 +27,8 @@ export default function ProductScreen() {
 
       <Text style={styles.meta}>{meta}</Text>
       <Text style={styles.description}>{product.shortDescription}</Text>
+
+      <FollowButton productSlug={product.slug} />
 
       {isSupplement && <SupplementDisclaimer />}
 

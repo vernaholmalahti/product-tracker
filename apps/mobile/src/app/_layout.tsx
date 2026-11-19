@@ -5,6 +5,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/outfit";
 import { Stack } from "expo-router";
+import { useNotificationTaps } from "@/hooks/useNotificationTaps";
 import { useRegisterDevice } from "@/hooks/useRegisterDevice";
 import { colors, fonts } from "@/theme";
 
@@ -14,6 +15,7 @@ import { colors, fonts } from "@/theme";
 export default function RootLayout() {
   // Hooks must run on every render in the same order, so they go before any early return.
   useRegisterDevice();
+  useNotificationTaps();
 
   // Load the brand font before drawing anything, so text doesn't jump
   // from the system font to Outfit after a moment.

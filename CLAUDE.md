@@ -79,6 +79,7 @@ cd server && npm run dev        # start API with auto-restart; GET /health also 
 cd server && npm run typecheck  # strict TypeScript check, no output = OK
 cd server && npm run build      # compile to dist/
 cd server && npm start          # run compiled dist/index.js
+cd server && npm run notify:status -- solein EU   # push current status to followers (dev tool, Phase 3 demo)
 
 # prisma (7.10.1, pinned – npm "latest" tag points to an 8.0 RC; config in server/prisma.config.ts)
 cd server && npx prisma migrate dev --name <change>   # after editing schema.prisma
