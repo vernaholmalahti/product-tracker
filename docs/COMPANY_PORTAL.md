@@ -35,7 +35,7 @@ Companies **cannot**:
 
 ## 3. How it looks in the app
 
-- **Timeline (verified by NovelTrack):** same as before; each event shows its source. Events that came from a company submission show "Source: company press release" until an official source confirms them.
+- **Timeline (verified by Ripe):** same as before; each event shows its source. Events that came from a company submission show "Source: company press release" until an official source confirms them.
 - **From the company:** separate card with the company's own text, logo and links, labelled "Provided by {company}".
 - **Verified company badge** next to the company name once verified.
 

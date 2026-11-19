@@ -1,0 +1,26 @@
+# Local development database. Start:  docker compose up -d
+#                                Stop:   docker compose down   (data is kept)
+# These credentials are for local development only – never use them in production.
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: ripe-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ripe
+      POSTGRES_PASSWORD: ripe
+      POSTGRES_DB: ripe
+    ports:
+      - "5432:5432" # your Mac's port 5432 → the container's port 5432
+    volumes:
+      # Named volume so data survives container restarts and re-creation.
+      # (Postgres 18+ images store data under /var/lib/postgresql.)
+      - ripe-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ripe -d ripe"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  ripe-db-data:

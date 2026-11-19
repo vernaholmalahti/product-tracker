@@ -4,7 +4,7 @@ Instructions for Claude Code. Read this file first, then the files in `docs/` be
 
 ## What we are building
 
-**NovelTrack** (working name) is a mobile-first app where consumers can follow new food products and supplement ingredients (for example Solein and NMN) through the regulatory process until they reach shops. Each product has a timeline per market (EU, US, UK, Singapore...). Users follow products and get a push notification when a product moves to a new stage.
+**Ripe** is a mobile-first app where consumers can follow new food products and supplement ingredients (for example Solein and NMN) through the regulatory process until they reach shops. Each product has a timeline per market (EU, US, UK, Singapore...). Users follow products and get a push notification when a product moves to a new stage.
 
 An AI-assisted backend job checks for news once a day and proposes updates. Updates are only published automatically when they come from an official source; everything else waits for a human to approve it in an admin view.
 
@@ -38,7 +38,7 @@ I am a student building this as a portfolio project and I want to **understand t
 - **Monorepo layout:**
 
 ```
-noveltrack/
+ripe/
   apps/
     mobile/        # Expo app (consumer screens + admin review screen)
   server/
@@ -67,22 +67,31 @@ noveltrack/
 ## Commands (fill in as they are created)
 
 ```bash
+# database (PostgreSQL 18 in Docker, run from repo root; Docker Desktop must be running)
+docker compose up -d            # start (data kept in volume ripe-db-data)
+docker compose down             # stop (data is kept)
+docker compose exec db psql -U ripe   # SQL prompt inside the database
+
 # server (API on http://localhost:4000, PORT in server/.env)
 cd server && cp .env.example .env   # first time only
-cd server && npm run dev        # start API with auto-restart; check GET /health
+cd server && npm run dev        # start API with auto-restart; GET /health also checks the database
 cd server && npm run typecheck  # strict TypeScript check, no output = OK
 cd server && npm run build      # compile to dist/
 cd server && npm start          # run compiled dist/index.js
 
+# prisma (7.10.1, pinned – npm "latest" tag points to an 8.0 RC; config in server/prisma.config.ts)
+cd server && npx prisma migrate dev --name <change>   # after editing schema.prisma
+cd server && npx prisma generate      # rebuild client in src/generated/prisma (also runs on npm install)
+cd server && npx prisma studio        # browse the database in the browser
+
 # mobile (Expo SDK 58, routes in src/app/)
-cd apps/mobile && npx expo start      # scan QR with Expo Go; --tunnel if Wi-Fi blocks it
+cd apps/mobile && npx expo start      # scan QR with Expo Go; --tunnel if Wi-Fi blocks it; w = open in browser
 cd apps/mobile && npm run typecheck
 cd apps/mobile && npx expo install <package>   # add packages (SDK-compatible versions)
 
 # not created yet
 cd server && npm run worker     # run update job once (Phase 5)
-cd server && npx prisma migrate dev   # (Phase 1)
-cd server && npx prisma db seed       # (Phase 1)
+cd server && npx prisma db seed # (Phase 1)
 ```
 
 Note: port 3000 is used by another local project on this machine, so the API uses 4000.

@@ -13,8 +13,8 @@ Claude Code: tick the boxes as steps are finished.
 **Demo:** app opens, server answers `/health`.
 
 ## Phase 1 – Data model and seed data
-- [ ] PostgreSQL + Prisma set up
-- [ ] Create tables from `docs/DATA_MODEL.md`
+- [x] PostgreSQL + Prisma set up
+- [x] Create tables from `docs/DATA_MODEL.md`
 - [ ] Seed Solein and NMN with the data in `docs/CONTENT_GUIDELINES.md`
 - [ ] API routes: `GET /products`, `GET /products/:slug`
 
@@ -64,7 +64,7 @@ Claude Code: tick the boxes as steps are finished.
 
 ## Phase 7 – Polish for portfolio
 - [ ] Empty states, loading states, error messages
-- [ ] Simple branding (name, icon, colours)
+- [ ] Branding: name **Ripe**, ripening-ring logo, palette Sprout #1FA463, Zest #A6D93B, Amber #FFB020, Ripe #FF5A1F, Plum #2B1B3D (text/dark), Cream #FFF7EC (background), font Outfit. Use the four ring colours for the timeline stages, always with text labels.
 - [ ] README screenshots and a short "how the AI pipeline works" section
 - [ ] Basic tests: zod schema validation, diff logic, approval rules
 - [ ] Deploy server (e.g. Render/Railway/Fly) and build the app with EAS

@@ -1,0 +1,199 @@
+// Ripe database schema. Source of truth for the tables: docs/DATA_MODEL.md
+// After changing this file run:  npx prisma migrate dev --name <what-changed>
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum Category {
+  NOVEL_FOOD
+  SUPPLEMENT_INGREDIENT
+}
+
+// Generic regulatory stages; meaning per market is in docs/CONTENT_GUIDELINES.md
+enum Stage {
+  NOT_SUBMITTED
+  APPLICATION_SUBMITTED
+  UNDER_ASSESSMENT
+  POSITIVE_SAFETY_OPINION
+  AUTHORISED
+  ON_MARKET
+  REJECTED
+  WITHDRAWN
+}
+
+enum SourceType {
+  OFFICIAL
+  COMPANY
+  NEWS
+}
+
+enum PublishedBy {
+  SEED
+  AUTO
+  ADMIN
+}
+
+enum UpdateOrigin {
+  SOURCE_CHECK
+  AI_SEARCH
+}
+
+enum PendingStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  AUTO_PUBLISHED
+}
+
+enum SourceWatchKind {
+  RSS
+  PAGE_HASH
+  SEARCH_PAGE
+}
+
+// ─── Products and markets ───────────────────────────────────────────────────
+
+model Product {
+  id               String   @id @default(uuid()) @db.Uuid
+  slug             String   @unique // e.g. "solein", used in URLs
+  name             String
+  category         Category
+  company          String?
+  shortDescription String
+  imageUrl         String?
+  searchKeywords   String[] // used by the AI search
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  marketStatuses ProductMarketStatus[]
+  follows        Follow[]
+  sourceWatches  SourceWatch[]
+}
+
+model Market {
+  code String @id // "EU", "US", "UK", "SG"
+  name String
+
+  productStatuses ProductMarketStatus[]
+  follows         Follow[]
+  sourceWatches   SourceWatch[]
+}
+
+// Current status of one product in one market.
+model ProductMarketStatus {
+  id            String   @id @default(uuid()) @db.Uuid
+  productId     String   @db.Uuid
+  marketCode    String
+  currentStage  Stage
+  expectedNext  String?
+  lastCheckedAt DateTime @default(now())
+
+  product        Product         @relation(fields: [productId], references: [id])
+  market         Market          @relation(fields: [marketCode], references: [code])
+  events         StatusEvent[]
+  pendingUpdates PendingUpdate[]
+
+  @@unique([productId, marketCode]) // one status per product per market
+}
+
+// The timeline: one row per stage change. Never deleted, only added.
+model StatusEvent {
+  id                    String      @id @default(uuid()) @db.Uuid
+  productMarketStatusId String      @db.Uuid
+  stage                 Stage
+  eventDate             DateTime    @db.Date // date of the real-world event
+  title                 String
+  summary               String
+  sourceUrl             String // required (ground rule 3)
+  sourceType            SourceType
+  publishedBy           PublishedBy
+  createdAt             DateTime    @default(now())
+
+  productMarketStatus ProductMarketStatus @relation(fields: [productMarketStatusId], references: [id])
+
+  @@index([productMarketStatusId, eventDate])
+}
+
+// ─── Update pipeline ────────────────────────────────────────────────────────
+
+// Proposed change from the worker, waiting for approval (ground rule 2).
+model PendingUpdate {
+  id                    String        @id @default(uuid()) @db.Uuid
+  productMarketStatusId String        @db.Uuid
+  proposedStage         Stage
+  eventDate             DateTime?     @db.Date
+  title                 String
+  summary               String
+  sourceUrl             String
+  sourceType            SourceType
+  evidenceQuote         String // short quote from the source (under 25 words)
+  confidence            Float? // 0–1, only for AI_SEARCH (source checks have no AI score)
+  origin                UpdateOrigin
+  status                PendingStatus @default(PENDING)
+  reviewNote            String?
+  updateRunId           String?       @db.Uuid // null for manually created updates
+  createdAt             DateTime      @default(now())
+
+  productMarketStatus ProductMarketStatus @relation(fields: [productMarketStatusId], references: [id])
+  updateRun           UpdateRun?          @relation(fields: [updateRunId], references: [id])
+
+  @@index([status])
+}
+
+// Official pages/feeds the worker checks without AI.
+model SourceWatch {
+  id            String          @id @default(uuid()) @db.Uuid
+  productId     String?         @db.Uuid // null = general source
+  marketCode    String
+  url           String
+  kind          SourceWatchKind
+  lastHash      String?
+  lastCheckedAt DateTime?
+
+  product Product? @relation(fields: [productId], references: [id])
+  market  Market   @relation(fields: [marketCode], references: [code])
+}
+
+// Log of every worker run.
+model UpdateRun {
+  id           String    @id @default(uuid()) @db.Uuid
+  startedAt    DateTime  @default(now())
+  finishedAt   DateTime? // null while the run is still going
+  aiCallsUsed  Int       @default(0)
+  changesFound Int       @default(0)
+  errors       Json      @default("[]")
+
+  pendingUpdates PendingUpdate[]
+}
+
+// ─── Consumers ──────────────────────────────────────────────────────────────
+
+// Anonymous consumer device (no login).
+model Device {
+  id            String   @id @db.Uuid // generated in the app, so no default here
+  expoPushToken String?
+  createdAt     DateTime @default(now())
+
+  follows Follow[]
+}
+
+model Follow {
+  id         String  @id @default(uuid()) @db.Uuid
+  deviceId   String  @db.Uuid
+  productId  String  @db.Uuid
+  marketCode String? // null = all markets
+
+  device  Device  @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+  market  Market? @relation(fields: [marketCode], references: [code])
+
+  @@unique([deviceId, productId, marketCode])
+}

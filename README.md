@@ -1,8 +1,10 @@
-# NovelTrack (working name)
+# Ripe
+
+*Watch what's next in food.*
 
 Follow new foods and supplement ingredients from lab to shop shelf.
 
-NovelTrack shows where products like **Solein** (Solar Foods' gas-fermented protein) and **NMN** (a supplement ingredient) are in the approval process in each market, and notifies you when something changes.
+Ripe shows where products like **Solein** (Solar Foods' gas-fermented protein) and **NMN** (a supplement ingredient) are in the approval process in each market, and notifies you when something changes.
 
 ## Features
 
@@ -46,4 +48,4 @@ npx expo start
 
 ## Disclaimer
 
-NovelTrack shows regulatory status information with links to sources. It does not give medical, nutritional or dosing advice.
+Ripe shows regulatory status information with links to sources. It does not give medical, nutritional or dosing advice.

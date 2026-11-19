@@ -10,8 +10,19 @@ if (existsSync(envFilePath)) {
   process.loadEnvFile(envFilePath);
 }
 
+// Reads a setting that must exist. Fails at startup with a clear message
+// instead of crashing later with a confusing database error.
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing environment variable ${name}. Copy server/.env.example to server/.env and fill it in.`);
+  }
+  return value;
+}
+
 // One typed place for all settings. Other files import `config` instead of
 // reading process.env directly. Settings are added here as later phases need them.
 export const config = {
   port: Number(process.env.PORT ?? 4000),
+  databaseUrl: requireEnv("DATABASE_URL"),
 };

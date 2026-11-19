@@ -71,11 +71,11 @@ Proposed change from the worker, waiting for approval.
 | sourceUrl | string | |
 | sourceType | enum | |
 | evidenceQuote | string | short quote from the source (under 25 words) |
-| confidence | float 0–1 | from AI output |
+| confidence | float? 0–1 | from AI output; null for `SOURCE_CHECK` updates |
 | origin | enum | `SOURCE_CHECK`, `AI_SEARCH` |
 | status | enum | `PENDING`, `APPROVED`, `REJECTED`, `AUTO_PUBLISHED` |
 | reviewNote | string? | reason for rejection etc. |
-| updateRunId | fk → UpdateRun | |
+| updateRunId | fk? → UpdateRun | null for manually created updates (admin test data, Phase 8 company submissions) |
 | createdAt | datetime | |
 
 ## Device
@@ -90,9 +90,10 @@ Anonymous consumer device.
 ## Follow
 | Field | Type | Notes |
 |---|---|---|
+| id | uuid | own primary key (the unique below allows a null marketCode, so it cannot be the key) |
 | deviceId | fk → Device | |
 | productId | fk → Product | |
-| marketCode | string? | null = all markets |
+| marketCode | fk? → Market | null = all markets |
 | unique | (deviceId, productId, marketCode) | |
 
 ## SourceWatch
@@ -102,7 +103,7 @@ Official pages/feeds the worker checks without AI.
 |---|---|---|
 | id | uuid | |
 | productId | fk? | null = general source |
-| marketCode | string | |
+| marketCode | fk → Market | |
 | url | string | |
 | kind | enum | `RSS`, `PAGE_HASH`, `SEARCH_PAGE` |
 | lastHash | string? | |

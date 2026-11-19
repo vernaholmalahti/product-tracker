@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>NovelTrack</Text>
+      <Text style={styles.title}>Ripe</Text>
       <Text style={styles.subtitle}>
         Follow new foods and supplement ingredients from lab to shop shelf.
       </Text>

@@ -1,4 +1,4 @@
-// Entry point for the NovelTrack API server: builds the app and starts listening.
+// Entry point for the Ripe API server: builds the app and starts listening.
 import { createApp } from "./api/app";
 import { config } from "./config";
 
@@ -7,5 +7,5 @@ import { config } from "./config";
 const port = config.port;
 
 createApp().listen(port, () => {
-  console.log(`NovelTrack API listening on http://localhost:${port}`);
+  console.log(`Ripe API listening on http://localhost:${port}`);
 });

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "NovelTrack",
-    "slug": "noveltrack",
+    "name": "Ripe",
+    "slug": "ripe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "noveltrack",
+    "scheme": "ripe",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
