@@ -12,6 +12,14 @@
 
 Explain in the app, in plain language, that a positive safety opinion is **not yet** permission to sell in the EU.
 
+**Label for US supplement ingredients:** FDA does not "authorise" supplement ingredients. For a `SUPPLEMENT_INGREDIENT` in the US, the stage `AUTHORISED` is stored as normal but the app shows the label **"Allowed in supplements"** instead of "Authorised".
+
+## Dates
+
+- If the exact day of an event is known, use it (`eventDatePrecision = DAY`).
+- If only the month is known (e.g. "Sep 2022"), store the 1st of the month and set `eventDatePrecision = MONTH`. The app then shows "Sep 2022", never an invented day.
+- Use the date of the real-world event (e.g. the day EFSA's panel adopted an opinion), not the date a news article was published.
+
 ## Wording rules
 
 - Neutral and factual: "EFSA concluded it is safe under the proposed conditions of use" – not "proven safe" or "healthy".

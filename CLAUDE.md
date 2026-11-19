@@ -83,6 +83,8 @@ cd server && npm start          # run compiled dist/index.js
 cd server && npx prisma migrate dev --name <change>   # after editing schema.prisma
 cd server && npx prisma generate      # rebuild client in src/generated/prisma (also runs on npm install)
 cd server && npx prisma studio        # browse the database in the browser
+cd server && npx prisma db seed       # add seed data from prisma/seed.ts (safe to run again)
+# note: after migrate dev, also run prisma generate (Prisma 7 no longer does it automatically)
 
 # mobile (Expo SDK 58, routes in src/app/)
 cd apps/mobile && npx expo start      # scan QR with Expo Go; --tunnel if Wi-Fi blocks it; w = open in browser
@@ -91,7 +93,6 @@ cd apps/mobile && npx expo install <package>   # add packages (SDK-compatible ve
 
 # not created yet
 cd server && npm run worker     # run update job once (Phase 5)
-cd server && npx prisma db seed # (Phase 1)
 ```
 
 Note: port 3000 is used by another local project on this machine, so the API uses 4000.

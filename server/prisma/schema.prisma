@@ -29,6 +29,13 @@ enum Stage {
   WITHDRAWN
 }
 
+// How exact an event date is. MONTH = only the month is known: store the 1st
+// of the month and show e.g. "Sep 2022" instead of an invented day.
+enum DatePrecision {
+  DAY
+  MONTH
+}
+
 enum SourceType {
   OFFICIAL
   COMPANY
@@ -106,16 +113,17 @@ model ProductMarketStatus {
 
 // The timeline: one row per stage change. Never deleted, only added.
 model StatusEvent {
-  id                    String      @id @default(uuid()) @db.Uuid
-  productMarketStatusId String      @db.Uuid
+  id                    String        @id @default(uuid()) @db.Uuid
+  productMarketStatusId String        @db.Uuid
   stage                 Stage
-  eventDate             DateTime    @db.Date // date of the real-world event
+  eventDate             DateTime      @db.Date // date of the real-world event
+  eventDatePrecision    DatePrecision @default(DAY)
   title                 String
   summary               String
   sourceUrl             String // required (ground rule 3)
   sourceType            SourceType
   publishedBy           PublishedBy
-  createdAt             DateTime    @default(now())
+  createdAt             DateTime      @default(now())
 
   productMarketStatus ProductMarketStatus @relation(fields: [productMarketStatusId], references: [id])
 
@@ -130,6 +138,7 @@ model PendingUpdate {
   productMarketStatusId String        @db.Uuid
   proposedStage         Stage
   eventDate             DateTime?     @db.Date
+  eventDatePrecision    DatePrecision @default(DAY)
   title                 String
   summary               String
   sourceUrl             String

@@ -51,6 +51,7 @@ The timeline. One row per stage change. Never deleted, only added.
 | productMarketStatusId | fk | |
 | stage | Stage | |
 | eventDate | date | date of the real-world event |
+| eventDatePrecision | enum `DAY`, `MONTH` | default `DAY`. `MONTH` = only the month is known: store the 1st, show "Sep 2022" |
 | title | string | "EFSA publishes positive safety opinion" |
 | summary | string | 1–3 sentences, plain language |
 | sourceUrl | string | required |
@@ -67,6 +68,7 @@ Proposed change from the worker, waiting for approval.
 | productMarketStatusId | fk | |
 | proposedStage | Stage | |
 | eventDate | date? | |
+| eventDatePrecision | enum `DAY`, `MONTH` | default `DAY` |
 | title / summary | string | |
 | sourceUrl | string | |
 | sourceType | enum | |

@@ -1,5 +1,6 @@
 import express from "express";
 import { healthRoutes } from "./healthRoutes";
+import { productRoutes } from "./productRoutes";
 
 // Builds the Express app but does NOT start listening.
 // Keeping this separate from index.ts means tests (Phase 7) can use the app
@@ -11,6 +12,7 @@ export function createApp() {
   app.use(express.json());
 
   app.use(healthRoutes);
+  app.use(productRoutes);
 
   return app;
 }

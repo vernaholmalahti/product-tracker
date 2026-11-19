@@ -15,8 +15,8 @@ Claude Code: tick the boxes as steps are finished.
 ## Phase 1 – Data model and seed data
 - [x] PostgreSQL + Prisma set up
 - [x] Create tables from `docs/DATA_MODEL.md`
-- [ ] Seed Solein and NMN with the data in `docs/CONTENT_GUIDELINES.md`
-- [ ] API routes: `GET /products`, `GET /products/:slug`
+- [x] Seed Solein and NMN with the data in `docs/CONTENT_GUIDELINES.md`
+- [x] API routes: `GET /products`, `GET /products/:slug`
 
 **Demo:** API returns Solein with its EU, US and Singapore timelines.
 
