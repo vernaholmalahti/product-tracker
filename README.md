@@ -12,7 +12,7 @@ Ripe shows where products like **Solein** (Solar Foods' gas-fermented protein) a
 - Follow products and get push notifications when their status changes
 - Every status shows its official source and the date it was last checked
 - Daily AI-assisted update job that finds news and proposes updates
-- Admin review screen: approve or reject proposed updates
+- Admin review web page: approve or reject proposed updates and product suggestions
 
 ## Tech
 

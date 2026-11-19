@@ -21,11 +21,11 @@ Claude Code: tick the boxes as steps are finished.
 **Demo:** API returns Solein with its EU, US and Singapore timelines.
 
 ## Phase 2 – Consumer app (read-only)
-- [ ] Product list screen (name, category, short status per market)
-- [ ] Product detail screen with a vertical timeline per market
-- [ ] Each stage shows date, source link and "last checked" date
-- [ ] Market filter (EU / US / UK / Singapore)
-- [ ] Disclaimer on supplement pages
+- [x] Product list screen (name, category, short status per market)
+- [x] Product detail screen with a vertical timeline per market
+- [x] Each stage shows date, source link and "last checked" date
+- [x] Market filter (EU / US / UK / Singapore)
+- [x] Disclaimer on supplement pages
 
 **Demo:** browse Solein and NMN on a phone.
 
@@ -38,13 +38,14 @@ Claude Code: tick the boxes as steps are finished.
 
 **Demo:** change a status → phone gets a notification.
 
-## Phase 4 – Admin review
+## Phase 4 – Admin review (web page)
+The admin side is a **web page**: reviewing sources and reading quotes is easier on a computer. It is built with Expo for web from the same codebase, so it also works in a phone's browser.
 - [ ] Simple admin login (one admin account, password hash in DB, or an admin token in `.env` for the first version)
-- [ ] Admin screen: list of `PendingUpdate`s with source, quote and proposed stage
+- [ ] Admin web page: list of `PendingUpdate`s with source link, quote and proposed stage, laid out for a desktop browser
 - [ ] Approve → creates a `StatusEvent`, updates the product, sends notifications
 - [ ] Reject → marks the update as rejected with a reason
 
-**Demo:** create a fake pending update, approve it, phone gets notified.
+**Demo:** create a fake pending update, approve it in the browser, phone gets notified.
 
 ## Phase 5 – Daily update worker (no AI yet)
 - [ ] Worker process with `node-cron` (daily), plus `npm run worker` to run once
@@ -60,7 +61,17 @@ Claude Code: tick the boxes as steps are finished.
 - [ ] Auto-publish rule for official sources; everything else needs review
 - [ ] Limits: max AI calls per run, timeout, error handling
 
-**Demo:** run the worker; see proposed updates appear in the admin screen with sources.
+**Demo:** run the worker; see proposed updates appear in the admin web page with sources.
+
+## Phase 6b – AI product discovery
+Moved here from Phase 8: it only depends on the AI worker from Phase 6, so the app can grow on its own much sooner. Details: `docs/COMPANY_PORTAL.md` section 4.
+- [ ] `ProductSuggestion` table (`origin`: `AI_DISCOVERY` for now; `COMPANY` and `USER` are added later)
+- [ ] Weekly worker job: check new EFSA novel food opinions, EU Union list additions and new FDA GRAS notices
+- [ ] AI extracts product name, company, ingredient and market → `ProductSuggestion` (validated with zod, never a product directly)
+- [ ] Admin web page tab: product suggestions → approve creates the product, reject with a reason
+- [ ] Limits: max AI calls per discovery run, skip suggestions that already exist
+
+**Demo:** run the discovery job; a new product suggestion appears in the admin web page; approve it and it shows up in the app.
 
 ## Phase 7 – Polish for portfolio
 - [ ] Empty states, loading states, error messages
@@ -69,16 +80,14 @@ Claude Code: tick the boxes as steps are finished.
 - [ ] Basic tests: zod schema validation, diff logic, approval rules
 - [ ] Deploy server (e.g. Render/Railway/Fly) and build the app with EAS
 
-## Phase 8 – Company portal and product discovery
-Details: `docs/COMPANY_PORTAL.md`
-- [ ] `Company`, `CompanyUser` and `ProductSuggestion` tables + changes to existing tables
+## Phase 8 – Company portal
+Details: `docs/COMPANY_PORTAL.md` (product discovery was moved to Phase 6b)
+- [ ] `Company` and `CompanyUser` tables + changes to existing tables (add `COMPANY` origin to `ProductSuggestion`)
 - [ ] Company sign-up with email domain verification
-- [ ] Admin tab: verify companies
-- [ ] Company web portal: suggest product, claim product, propose status change with source
+- [ ] Admin web page tab: verify companies
+- [ ] Company web portal: suggest product (→ `ProductSuggestion`), claim product, propose status change with source
 - [ ] Company submissions go into the existing `PendingUpdate` review queue
 - [ ] "From the company" card and verified badge in the app
-- [ ] Weekly AI discovery of new products → `ProductSuggestion`s
-- [ ] Admin tab: product suggestions
 - [ ] Terms of service, privacy policy, rate limits, audit log
 
 **Demo:** a test company signs up, gets verified, submits a product, admin approves it, it appears in the app.

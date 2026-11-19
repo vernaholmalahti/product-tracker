@@ -111,8 +111,9 @@ Official pages/feeds the worker checks without AI.
 | lastHash | string? | |
 | lastCheckedAt | datetime? | |
 
-## Coming in Phase 8
-`Company`, `CompanyUser`, `ProductSuggestion` and a few new fields/enum values – see `COMPANY_PORTAL.md` section 5. Not needed before Phase 8.
+## Coming later
+- **Phase 6b:** `ProductSuggestion` (see `COMPANY_PORTAL.md` section 5), with `origin` = `AI_DISCOVERY` at first.
+- **Phase 8:** `Company`, `CompanyUser` and a few new fields/enum values – see `COMPANY_PORTAL.md` section 5.
 
 ## UpdateRun
 Log of every worker run.

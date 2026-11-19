@@ -14,6 +14,12 @@ Explain in the app, in plain language, that a positive safety opinion is **not y
 
 **Label for US supplement ingredients:** FDA does not "authorise" supplement ingredients. For a `SUPPLEMENT_INGREDIENT` in the US, the stage `AUTHORISED` is stored as normal but the app shows the label **"Allowed in supplements"** instead of "Authorised".
 
+## Markets
+
+- A market is one jurisdiction with its own regulator: a country, or the EU. Never a region like "East Asia", because each country there approves products separately.
+- The app shows full market names ("Singapore", not "SG").
+- The market filter groups markets by region: **Europe** (EU, UK), **Americas** (US), **Asia** (Singapore). Japan, South Korea and China can be added later as separate markets once there is sourced data.
+
 ## Dates
 
 - If the exact day of an event is known, use it (`eventDatePrecision = DAY`).

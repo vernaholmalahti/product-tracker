@@ -26,7 +26,7 @@ async function findAllProducts() {
         orderBy: { marketCode: "asc" },
         select: {
           marketCode: true,
-          market: { select: { name: true } },
+          market: { select: { name: true, region: true } },
           currentStage: true,
           expectedNext: true,
           lastCheckedAt: true,
@@ -51,7 +51,7 @@ async function findProductBySlug(slug: string) {
         orderBy: { marketCode: "asc" },
         select: {
           marketCode: true,
-          market: { select: { name: true } },
+          market: { select: { name: true, region: true } },
           currentStage: true,
           expectedNext: true,
           lastCheckedAt: true,
@@ -84,6 +84,7 @@ productRoutes.get("/products", async (_req, res) => {
       markets: marketStatuses.map(({ market, ...status }) => ({
         ...status,
         marketName: market.name,
+        marketRegion: market.region,
       })),
     })),
   );
@@ -103,6 +104,7 @@ productRoutes.get("/products/:slug", async (req, res) => {
     markets: marketStatuses.map(({ market, events, ...status }) => ({
       ...status,
       marketName: market.name,
+      marketRegion: market.region,
       events: events.map((event) => ({ ...event, eventDate: toDateString(event.eventDate) })),
     })),
   });

@@ -23,7 +23,7 @@ flowchart TD
 ### 1. Mobile app (`apps/mobile`)
 - Expo + Expo Router + TypeScript.
 - Consumer screens: product list, product detail with timelines, followed products, settings.
-- Admin screen: pending updates (only visible after admin login).
+- Admin web page (Expo for web, same codebase): pending updates and product suggestions, only after admin login. Made for a desktop browser, also works in a phone browser.
 - Talks **only** to our own API. Never calls the AI or external sites directly.
 
 ### 2. API server (`server/src/api`)

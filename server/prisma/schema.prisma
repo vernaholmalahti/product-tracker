@@ -85,9 +85,17 @@ model Product {
   sourceWatches  SourceWatch[]
 }
 
+// Used to group markets in the app's filter (CONTENT_GUIDELINES.md → Markets).
+enum Region {
+  EUROPE
+  AMERICAS
+  ASIA
+}
+
 model Market {
-  code String @id // "EU", "US", "UK", "SG"
-  name String
+  code   String @id // "EU", "US", "UK", "SG"
+  name   String
+  region Region
 
   productStatuses ProductMarketStatus[]
   follows         Follow[]

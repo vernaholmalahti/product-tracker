@@ -14,7 +14,8 @@ Full details:
 - `docs/DATA_MODEL.md` – database tables
 - `docs/AI_UPDATE_PIPELINE.md` – the AI search/update job, JSON schema and approval rules
 - `docs/CONTENT_GUIDELINES.md` – regulatory stages, wording rules for supplements, seed data
-- `docs/COMPANY_PORTAL.md` – Phase 8: companies add their own products, AI product discovery (don't build before Phase 8, but keep the data model easy to extend)
+- `docs/BRANDING.md` – app name, logo files, Expo icon setup, colours and font
+- `docs/COMPANY_PORTAL.md` – Phase 8: companies add their own products (don't build before Phase 8, but keep the data model easy to extend). Section 4, AI product discovery, is built earlier in Phase 6b
 
 ## How to work with me (important)
 
@@ -40,7 +41,7 @@ I am a student building this as a portfolio project and I want to **understand t
 ```
 ripe/
   apps/
-    mobile/        # Expo app (consumer screens + admin review screen)
+    mobile/        # Expo app (consumer screens on phone + admin review as a web page)
   server/
     src/
       api/         # Express routes

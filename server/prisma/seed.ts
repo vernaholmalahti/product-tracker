@@ -5,17 +5,18 @@ import { prisma } from "../src/db/client";
 import type {
   Category,
   DatePrecision,
+  Region,
   SourceType,
   Stage,
 } from "../src/generated/prisma/client";
 
 // ─── Data ───────────────────────────────────────────────────────────────────
 
-const markets = [
-  { code: "EU", name: "European Union" },
-  { code: "US", name: "United States" },
-  { code: "UK", name: "United Kingdom" },
-  { code: "SG", name: "Singapore" },
+const markets: { code: string; name: string; region: Region }[] = [
+  { code: "EU", name: "European Union", region: "EUROPE" },
+  { code: "US", name: "United States", region: "AMERICAS" },
+  { code: "UK", name: "United Kingdom", region: "EUROPE" },
+  { code: "SG", name: "Singapore", region: "ASIA" },
 ];
 
 type SeedEvent = {
@@ -173,7 +174,7 @@ async function seedMarkets(): Promise<void> {
   for (const market of markets) {
     await prisma.market.upsert({
       where: { code: market.code },
-      update: { name: market.name },
+      update: { name: market.name, region: market.region },
       create: market,
     });
   }

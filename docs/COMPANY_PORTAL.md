@@ -12,7 +12,7 @@ Companies are **one more source**, not a shortcut. Their submissions go into the
 
 1. Company user signs up with name, company name, website and work email.
 2. **Email domain check:** the email domain must match the company website domain (e.g. `@solarfoods.com` ↔ `solarfoods.com`). Send a verification link.
-3. Company status starts as `PENDING_VERIFICATION`. Admin checks it in the admin screen (website, business ID such as Finnish Y-tunnus, LinkedIn) and sets it to `VERIFIED` or `REJECTED`.
+3. Company status starts as `PENDING_VERIFICATION`. Admin checks it in the admin web page (website, business ID such as Finnish Y-tunnus, LinkedIn) and sets it to `VERIFIED` or `REJECTED`.
 4. A company can have several users; the first user is `OWNER` and can invite colleagues with the same email domain.
 
 Free email providers (gmail.com, outlook.com…) are not accepted for company accounts.
@@ -39,7 +39,7 @@ Companies **cannot**:
 - **From the company:** separate card with the company's own text, logo and links, labelled "Provided by {company}".
 - **Verified company badge** next to the company name once verified.
 
-## 4. AI discovery of new products
+## 4. AI discovery of new products (built earlier, in Phase 6b)
 
 Extend the worker so it also finds products nobody has added yet:
 - Weekly: check new EFSA novel food opinions, EU Union list additions and new FDA GRAS notices.
@@ -100,7 +100,7 @@ Extend the worker so it also finds products nobody has added yet:
 
 - Company portal as a **web app** (Expo web or a small Next.js app) – companies work on computers.
 - New API routes under `/company/*`, protected with company-user auth.
-- Admin screen gets two new tabs: "Company verifications" and "Product suggestions".
+- The admin web page gets a new tab: "Company verifications" ("Product suggestions" already exists from Phase 6b).
 
 ## 8. Legal and safety checklist
 - [ ] Terms of service for companies (they confirm submitted info is accurate and they own uploaded images)
