@@ -13,10 +13,13 @@
     "pending:fake": "tsx scripts/fakePending.ts",
     "test-data:clean": "tsx scripts/cleanTestData.ts",
     "worker": "tsx src/worker/index.ts",
-    "worker:daily": "tsx src/worker/index.ts --daily"
+    "worker:daily": "tsx src/worker/index.ts --daily",
+    "ai:check": "tsx scripts/aiCheck.ts",
+    "ai:test": "tsx scripts/aiTestProduct.ts"
   },
   "type": "commonjs",
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
     "@prisma/adapter-pg": "7.10.1",
     "@prisma/client": "7.10.1",
     "cors": "^2.8.6",

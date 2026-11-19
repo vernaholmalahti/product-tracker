@@ -98,6 +98,9 @@ cd apps/mobile && npx expo install <package>   # add packages (SDK-compatible ve
 # worker (separate process from the API; writes an UpdateRun row per run)
 cd server && npm run worker        # run the update job once now and exit
 cd server && npm run worker:daily  # stay running; runs on WORKER_CRON in WORKER_TIMEZONE
+cd server && npm run ai:check      # check ANTHROPIC_API_KEY + ANTHROPIC_MODEL (free: Models API, no tokens)
+cd server && npm run ai:test -- solein          # dry run: show what Claude would be told (free)
+cd server && npm run ai:test -- solein --spend  # ONE real AI check, prints raw output, saves nothing (~$0.10–0.15)
 ```
 
 Note: port 3000 is used by another local project on this machine, so the API uses 4000.
