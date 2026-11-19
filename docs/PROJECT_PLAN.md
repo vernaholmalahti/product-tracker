@@ -51,12 +51,15 @@ The admin side is a **web page**: reviewing sources and reading quotes is easier
 ## Phase 5 – Daily update worker (no AI yet)
 - [ ] Worker process with `node-cron` (daily), plus `npm run worker` to run once
 - [ ] Source checkers for official sources (see `docs/AI_UPDATE_PIPELINE.md`): fetch page/feed, detect changes by content hash
-- [ ] Changes create `PendingUpdate`s
+- [ ] Changes are recorded (in the `UpdateRun` log and `SourceWatch`), not turned into `PendingUpdate`s yet – a hash change doesn't say which stage (decision in `docs/AI_UPDATE_PIPELINE.md` section 10)
 - [ ] `UpdateRun` log table: started, finished, items checked, errors
+
+**Demo:** run `npm run worker`; see which official pages changed in the `UpdateRun` log.
 
 ## Phase 6 – AI search
 - [ ] Anthropic SDK in the worker, key from `.env`
 - [ ] Prompt + JSON schema from `docs/AI_UPDATE_PIPELINE.md`
+- [ ] Changed official pages from Phase 5 are given to the AI first; findings create `PendingUpdate`s
 - [ ] Validate output with zod; discard invalid output
 - [ ] Diff against current status; only real changes become `PendingUpdate`s
 - [ ] Auto-publish rule for official sources; everything else needs review
