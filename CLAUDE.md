@@ -95,8 +95,9 @@ cd apps/mobile && npx expo start      # scan QR with Expo Go; --tunnel if Wi-Fi 
 cd apps/mobile && npm run typecheck
 cd apps/mobile && npx expo install <package>   # add packages (SDK-compatible versions)
 
-# not created yet
-cd server && npm run worker     # run update job once (Phase 5)
+# worker (separate process from the API; writes an UpdateRun row per run)
+cd server && npm run worker        # run the update job once now and exit
+cd server && npm run worker:daily  # stay running; runs on WORKER_CRON in WORKER_TIMEZONE
 ```
 
 Note: port 3000 is used by another local project on this machine, so the API uses 4000.

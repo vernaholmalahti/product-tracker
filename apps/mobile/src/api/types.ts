@@ -73,6 +73,18 @@ export type PendingUpdate = {
   createdAt: string;
 };
 
-export type ProductDetail =Omit<ProductSummary, "markets"> & {
+// GET /admin/update-runs – one worker run (server: runUpdate.ts)
+export type UpdateRun = {
+  id: string;
+  startedAt: string;
+  finishedAt: string | null; // null while still running (or if it crashed hard)
+  aiCallsUsed: number;
+  itemsChecked: number;
+  changesFound: number;
+  sourceChanges: { sourceWatchId: string; label: string; url: string }[];
+  errors: { where: string; message: string }[];
+};
+
+export type ProductDetail = Omit<ProductSummary, "markets"> & {
   markets: (MarketStatus & { events: StatusEvent[] })[];
 };

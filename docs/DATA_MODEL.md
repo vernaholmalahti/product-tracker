@@ -106,10 +106,13 @@ Official pages/feeds the worker checks without AI.
 | id | uuid | |
 | productId | fk? | null = general source |
 | marketCode | fk → Market | |
-| url | string | |
+| label | string | human name, e.g. "EU – Union list of novel foods" |
+| url | string, unique | one watch per page |
 | kind | enum | `RSS`, `PAGE_HASH`, `SEARCH_PAGE` |
-| lastHash | string? | |
+| lastHash | string? | SHA-256 of the page text at the last successful check |
 | lastCheckedAt | datetime? | |
+| lastChangedAt | datetime? | when the hash last changed |
+| lastError | string? | last fetch error, cleared on the next successful check |
 
 ## Coming later
 - **Phase 6b:** `ProductSuggestion` (see `COMPANY_PORTAL.md` section 5), with `origin` = `AI_DISCOVERY` at first.
@@ -123,5 +126,7 @@ Log of every worker run.
 | id | uuid | |
 | startedAt / finishedAt | datetime | |
 | aiCallsUsed | int | |
+| itemsChecked | int | sources + products checked |
 | changesFound | int | |
-| errors | json | |
+| sourceChanges | json | `[{ sourceWatchId, label, url }]` pages whose content changed |
+| errors | json | `[{ where, message }]` |

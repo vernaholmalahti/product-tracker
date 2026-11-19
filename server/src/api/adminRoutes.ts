@@ -52,6 +52,16 @@ adminRoutes.get("/admin/pending-updates", async (_req, res) => {
   );
 });
 
+// GET /admin/update-runs – the latest worker runs, newest first (default 10, max 50).
+adminRoutes.get("/admin/update-runs", async (req, res) => {
+  const limit = z.coerce.number().int().min(1).max(50).catch(10).parse(req.query.limit);
+  const runs = await prisma.updateRun.findMany({
+    orderBy: { startedAt: "desc" },
+    take: limit,
+  });
+  res.json(runs);
+});
+
 const approveBody = z.object({
   eventDate: z.iso.date().optional(), // "YYYY-MM-DD", only needed if the update has no date
   eventDatePrecision: z.enum(["DAY", "MONTH"]).optional(),

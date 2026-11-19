@@ -1,5 +1,5 @@
 import { request } from "./client";
-import type { PendingUpdate } from "./types";
+import type { PendingUpdate, UpdateRun } from "./types";
 
 // Admin API calls. Each one sends "Authorization: Bearer <token>" (server: requireAdmin.ts).
 function adminHeaders(token: string): Record<string, string> {
@@ -14,6 +14,11 @@ export async function checkAdminToken(token: string): Promise<void> {
 export async function getPendingUpdates(token: string): Promise<PendingUpdate[]> {
   const response = await request("/admin/pending-updates", { headers: adminHeaders(token) });
   return (await response.json()) as PendingUpdate[];
+}
+
+export async function getUpdateRuns(token: string, limit = 10): Promise<UpdateRun[]> {
+  const response = await request(`/admin/update-runs?limit=${limit}`, { headers: adminHeaders(token) });
+  return (await response.json()) as UpdateRun[];
 }
 
 export async function approveUpdate(token: string, id: string, eventDate?: string): Promise<void> {

@@ -52,7 +52,7 @@ Starting list (☐ check each URL works and is the best page):
 | US | FDA – recently published GRAS notices and letters | ☐ https://www.fda.gov/food/gras-notice-inventory/recently-published-gras-notices-and-fda-letters | PAGE_HASH | GRAS `UNDER_ASSESSMENT` / `AUTHORISED` |
 | UK | FSA – register of regulated product applications | ☐ https://data.food.gov.uk/regulated-product-applications | SEARCH_PAGE | `APPLICATION_SUBMITTED` / `UNDER_ASSESSMENT` |
 | UK | FSA – authorised novel foods | ☐ https://data.food.gov.uk/regulated-products/novel_authorisations | PAGE_HASH | `AUTHORISED` |
-| UK | ACNFP papers (per application) | ☐ e.g. https://acnfp.food.gov.uk/Xanthobactersp.SoF1CellsFurtherInformation | PAGE_HASH | `UNDER_ASSESSMENT` |
+| UK | ACNFP papers (per application) | ✗ the Solein pages returned 404/410 in Nov 2026 – site reorganised; find new addresses before adding | PAGE_HASH | `UNDER_ASSESSMENT` |
 | SG | SFA – novel food page (links the list of approved novel foods, a PDF updated a few times a year) | ☐ https://www.sfa.gov.sg/food-information/novel-food | PAGE_HASH | `AUTHORISED` |
 
 A hash change only says "something changed", not which stage. What happens next: see decision 1 in section 10.

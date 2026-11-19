@@ -7,6 +7,7 @@ import type {
   DatePrecision,
   Region,
   SourceType,
+  SourceWatchKind,
   Stage,
 } from "../src/generated/prisma/client";
 
@@ -168,7 +169,79 @@ const products: SeedProduct[] = [
   },
 ];
 
+// Official pages the worker checks without AI (docs/AI_UPDATE_PIPELINE.md section 3).
+// productSlug = null means a general source for all products.
+// The EFSA RSS feed is added once its exact feed URL is confirmed.
+// The ACNFP Solein pages were removed (404/410 in Nov 2026); UK status is covered by the FSA register.
+const sourceWatches: {
+  label: string;
+  url: string;
+  marketCode: string;
+  kind: SourceWatchKind;
+  productSlug: string | null;
+}[] = [
+  {
+    label: "EU – Commission: summaries of novel food applications",
+    url: "https://food.ec.europa.eu/safety/novel-food/authorisations/summary-applications-and-notifications_en",
+    marketCode: "EU",
+    kind: "PAGE_HASH",
+    productSlug: null,
+  },
+  {
+    label: "EU – Commission: Union list of novel foods",
+    url: "https://food.ec.europa.eu/food-safety/novel-food/authorisations/union-list-novel-foods_en",
+    marketCode: "EU",
+    kind: "PAGE_HASH",
+    productSlug: null,
+  },
+  {
+    label: "US – FDA: recently published GRAS notices and letters",
+    url: "https://www.fda.gov/food/gras-notice-inventory/recently-published-gras-notices-and-fda-letters",
+    marketCode: "US",
+    kind: "PAGE_HASH",
+    productSlug: null,
+  },
+  {
+    label: "UK – FSA: register of regulated product applications",
+    url: "https://data.food.gov.uk/regulated-product-applications",
+    marketCode: "UK",
+    kind: "SEARCH_PAGE",
+    productSlug: null,
+  },
+  {
+    label: "UK – FSA: authorised novel foods",
+    url: "https://data.food.gov.uk/regulated-products/novel_authorisations",
+    marketCode: "UK",
+    kind: "PAGE_HASH",
+    productSlug: null,
+  },
+  {
+    label: "SG – SFA: novel food (links the list of approved novel foods)",
+    url: "https://www.sfa.gov.sg/food-information/novel-food",
+    marketCode: "SG",
+    kind: "PAGE_HASH",
+    productSlug: null,
+  },
+];
+
 // ─── Seeding functions ──────────────────────────────────────────────────────
+
+// Creates or updates each watched page. Never touches lastHash/lastCheckedAt,
+// so re-running the seed doesn't reset what the worker has learned.
+async function seedSourceWatches(): Promise<number> {
+  for (const watch of sourceWatches) {
+    const product = watch.productSlug
+      ? await prisma.product.findUniqueOrThrow({ where: { slug: watch.productSlug }, select: { id: true } })
+      : null;
+    const fields = { label: watch.label, marketCode: watch.marketCode, kind: watch.kind, productId: product?.id ?? null };
+    await prisma.sourceWatch.upsert({
+      where: { url: watch.url },
+      update: fields,
+      create: { url: watch.url, ...fields },
+    });
+  }
+  return sourceWatches.length;
+}
 
 async function seedMarkets(): Promise<void> {
   for (const market of markets) {
@@ -236,6 +309,8 @@ async function main(): Promise<void> {
     const added = await seedProduct(product);
     console.log(`Seeded ${product.name}: ${product.markets.length} markets, ${added} new events`);
   }
+  // After products, because some watches belong to a product.
+  console.log(`Seeded ${await seedSourceWatches()} source watches`);
 }
 
 main()

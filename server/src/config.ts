@@ -26,6 +26,9 @@ export const config = {
   port: Number(process.env.PORT ?? 4000),
   databaseUrl: requireEnv("DATABASE_URL"),
   adminToken: requireEnv("ADMIN_TOKEN"), // protects /admin/* routes (Phase 4)
+  // When the daily worker runs (cron: minute hour day month weekday), and in which time zone.
+  workerCron: process.env.WORKER_CRON ?? "0 6 * * *",
+  workerTimezone: process.env.WORKER_TIMEZONE ?? "Europe/Helsinki",
 };
 
 // The placeholder from .env.example is fine on your laptop, but never in production.

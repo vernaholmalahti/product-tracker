@@ -7,6 +7,7 @@ import type { PendingUpdate } from "@/api/types";
 import { clearAdminToken, loadAdminToken, saveAdminToken } from "@/admin/adminToken";
 import { LoginForm } from "@/admin/LoginForm";
 import { PendingUpdateCard } from "@/admin/PendingUpdateCard";
+import { WorkerRuns } from "@/admin/WorkerRuns";
 import { colors, fonts, spacing } from "@/theme";
 
 // Admin review page (/admin): pending updates waiting for approval.
@@ -116,6 +117,8 @@ export default function AdminScreen() {
                 onReject={(note) => reject(update, note)}
               />
             ))}
+
+            <WorkerRuns token={token} onError={handleError} />
           </>
         )}
       </View>

@@ -49,10 +49,10 @@ The admin side is a **web page**: reviewing sources and reading quotes is easier
 **Demo:** create a fake pending update, approve it in the browser, phone gets notified.
 
 ## Phase 5 – Daily update worker (no AI yet)
-- [ ] Worker process with `node-cron` (daily), plus `npm run worker` to run once
-- [ ] Source checkers for official sources (see `docs/AI_UPDATE_PIPELINE.md`): fetch page/feed, detect changes by content hash
-- [ ] Changes are recorded (in the `UpdateRun` log and `SourceWatch`), not turned into `PendingUpdate`s yet – a hash change doesn't say which stage (decision in `docs/AI_UPDATE_PIPELINE.md` section 10)
-- [ ] `UpdateRun` log table: started, finished, items checked, errors
+- [x] Worker process with `node-cron` (daily), plus `npm run worker` to run once
+- [x] Source checkers for official sources (see `docs/AI_UPDATE_PIPELINE.md`): fetch page/feed, detect changes by content hash
+- [x] Changes are recorded (in the `UpdateRun` log and `SourceWatch`), not turned into `PendingUpdate`s yet – a hash change doesn't say which stage (decision in `docs/AI_UPDATE_PIPELINE.md` section 10)
+- [x] `UpdateRun` log table: started, finished, items checked, errors
 
 **Demo:** run `npm run worker`; see which official pages changed in the `UpdateRun` log.
 
