@@ -1,0 +1,21 @@
+# Dependencies (reinstalled with `npm install`, never committed)
+node_modules/
+
+# Secrets – real keys live only in .env files (ground rule 1)
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Expo / React Native generated files
+.expo/
+web-build/
+ios/
+android/
+
+# Logs and OS clutter
+*.log
+.DS_Store

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    // Which JavaScript version to output. Node 24 understands modern JS.
+    "target": "ES2023",
+    // How imports work. "NodeNext" follows Node's own rules.
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // Where source lives and where compiled JS goes.
+    "rootDir": "src",
+    "outDir": "dist",
+
+    // Strict mode (CLAUDE.md rule 7): catches null/undefined bugs and missing types.
+    "strict": true,
+    // Extra safety: array[i] might be undefined, so TypeScript makes you check.
+    "noUncheckedIndexedAccess": true,
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true
+  },
+  "include": ["src"]
+}
