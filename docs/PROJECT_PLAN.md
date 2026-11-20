@@ -83,8 +83,10 @@ Moved here from Phase 8: it only depends on the AI worker from Phase 6, so the a
 - [ ] Empty states, loading states, error messages
 - [ ] Branding: name **Ripe**, ripening-ring logo, palette Sprout #1FA463, Zest #A6D93B, Amber #FFB020, Ripe #FF5A1F, Plum #2B1B3D (text/dark), Cream #FFF7EC (background), font Outfit. Use the four ring colours for the timeline stages, always with text labels.
 - [ ] README screenshots and a short "how the AI pipeline works" section
-- [ ] Basic tests: zod schema validation, diff logic, approval rules
-- [ ] Deploy server (e.g. Render/Railway/Fly) and build the app with EAS
+- [x] Basic tests: zod schema validation, diff logic, approval rules (+ schedule, API routes – `npm test`)
+- [x] GitHub Actions CI: typechecks + all tests on a fresh PostgreSQL on every push
+- [ ] Personal setup instead of public hosting (decision 20 Nov 2026): Mac as server, phone reaches it over Tailscale, real admin token, worker time when the Mac is awake, `preview` EAS build (standalone APK)
+- [ ] Later, if the app goes public: deploy server (e.g. Render/Railway/Fly) and publish with EAS
 
 ## Phase 8 – Company portal
 Details: `docs/COMPANY_PORTAL.md` (product discovery was moved to Phase 6b)
