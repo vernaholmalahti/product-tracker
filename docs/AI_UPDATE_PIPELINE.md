@@ -159,7 +159,7 @@ Official domains (☐ check):
 | Runs per day | 1 (`WORKER_CRON`, default 06:00) | `.env` |
 | AI calls per run | `AI_MAX_CALLS_PER_RUN` = 10 | `.env` |
 | Searches per AI call | 5 (`max_uses`) | code constant |
-| Skip a product checked in the last 20 hours | yes | code (makes a manual `npm run worker` safe) |
+| When a product is AI-checked | only if one of its official pages changed in this run, or every `AI_FULL_CHECK_DAYS` (7) days as a full check; never twice within 20 hours | `.env` + `schedule.ts` |
 | Timeout per AI call | 120 s | SDK option |
 | Retries | SDK default (2, on rate limits and server errors) | SDK |
 
@@ -171,7 +171,7 @@ Error handling:
 
 **Cost estimate** (Claude API prices, Nov 2026: Claude Sonnet 5.5 $2 / $10 per million input / output tokens; web search $10 per 1,000 searches):
 per product per run ≈ 3–5 searches ($0.03–0.05) + ~20–40k input tokens ($0.04–0.08) + ~2k output tokens ($0.02) ≈ **$0.10–0.15**.
-Two products, daily ≈ **$6–9 per month**. Prompt caching of the stable system prompt lowers the input part. Log `usage` from every call into the `UpdateRun` so the real cost is visible.
+Two products, daily ≈ **$6–9 per month**. **Chosen instead (20 Nov 2026):** ask only when a product's official page changed, plus a weekly full check ≈ **$1–2 per month** for two products. Official changes are still seen the same day; news from other sources can take up to a week. Prompt caching of the stable system prompt lowers the input part. Log `usage` from every call into the `UpdateRun` so the real cost is visible.
 
 ## 9. Phase 6b – product discovery (summary)
 

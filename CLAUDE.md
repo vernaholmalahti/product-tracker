@@ -77,6 +77,7 @@ docker compose exec db psql -U ripe   # SQL prompt inside the database
 cd server && cp .env.example .env   # first time only
 cd server && npm run dev        # start API with auto-restart; GET /health also checks the database
 cd server && npm run typecheck  # strict TypeScript check, no output = OK
+cd server && npm test           # unit tests (node:test via tsx): src/**/*.test.ts
 cd server && npm run build      # compile to dist/
 cd server && npm start          # run compiled dist/index.js
 cd server && npm run notify:status -- solein EU   # push current status to followers (dev tool, Phase 3 demo)
@@ -101,6 +102,7 @@ cd server && npm run worker:daily  # stay running; runs on WORKER_CRON in WORKER
 cd server && npm run ai:check      # check ANTHROPIC_API_KEY + ANTHROPIC_MODEL (free: Models API, no tokens)
 cd server && npm run ai:test -- solein          # dry run: show what Claude would be told (free)
 cd server && npm run ai:test -- solein --spend  # ONE real AI check, prints raw output, saves nothing (~$0.10–0.15)
+cd server && npm run ai:fake-run   # whole pipeline with a FAKE Claude (free); then npm run test-data:clean
 ```
 
 Note: port 3000 is used by another local project on this machine, so the API uses 4000.

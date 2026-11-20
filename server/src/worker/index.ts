@@ -12,7 +12,9 @@ async function runAndReport(): Promise<void> {
   console.log(`Worker run started ${new Date().toISOString()}`);
   const summary = await runUpdate();
   console.log(
-    `Worker run finished: ${summary.itemsChecked} checked, ${summary.changes.length} changed, ` +
+    `Worker run finished: ${summary.itemsChecked} checked, ${summary.changes.length} pages changed, ` +
+      `${summary.pendingCreated} new updates (${summary.autoPublished} auto-published), ` +
+      `${summary.aiCallsUsed} AI calls (~$${summary.aiCostUsd.toFixed(2)}), ` +
       `${summary.errors.length} errors (UpdateRun ${summary.updateRunId})`,
   );
 }

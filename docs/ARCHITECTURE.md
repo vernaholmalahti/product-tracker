@@ -65,6 +65,8 @@ DATABASE_URL=postgresql://user:password@localhost:5432/ripe
 ANTHROPIC_API_KEY=your-key-here
 ANTHROPIC_MODEL=claude-sonnet-5-5
 AI_MAX_CALLS_PER_RUN=10
+AI_FULL_CHECK_DAYS=7
 ADMIN_TOKEN=change-me
 WORKER_CRON=0 6 * * *
+WORKER_TIMEZONE=Europe/Helsinki
 ```

@@ -60,7 +60,7 @@ export function WorkerRuns({ token, onError }: Props) {
           </Text>
           <Text style={styles.muted}>
             {run.itemsChecked} checked · {run.changesFound} changed · {run.errors.length} errors
-            {run.aiCallsUsed > 0 && ` · ${run.aiCallsUsed} AI calls`}
+            {run.aiCallsUsed > 0 && ` · ${run.aiCallsUsed} AI calls (~$${run.aiCostUsd.toFixed(2)})`}
           </Text>
 
           {run.sourceChanges.map((change) => (

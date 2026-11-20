@@ -51,6 +51,8 @@ export const config = {
   anthropicApiKey: readApiKey(),
   anthropicModel: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-5-5",
   aiMaxCallsPerRun: readPositiveInt("AI_MAX_CALLS_PER_RUN", 10), // cost limit (ground rule 6)
+  // Full AI check every N days; in between, only when one of the product's official pages changed.
+  aiFullCheckDays: readPositiveInt("AI_FULL_CHECK_DAYS", 7),
 };
 
 // The placeholder from .env.example is fine on your laptop, but never in production.

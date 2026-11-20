@@ -15,6 +15,7 @@ A food ingredient or supplement ingredient we track.
 | shortDescription | string | 1–2 sentences, plain language |
 | imageUrl | string? | product/ingredient image (own or licensed only) |
 | searchKeywords | string[] | used by the AI search, e.g. `["Solein", "Solar Foods", "Xanthobacter"]` |
+| lastAiCheckAt | datetime? | last AI search for this product (cost limit) |
 | createdAt / updatedAt | datetime | |
 
 ## Market
@@ -77,6 +78,7 @@ Proposed change from the worker, waiting for approval.
 | origin | enum | `SOURCE_CHECK`, `AI_SEARCH` |
 | status | enum | `PENDING`, `APPROVED`, `REJECTED`, `AUTO_PUBLISHED` |
 | reviewNote | string? | reason for rejection etc. |
+| checkNotes | string[] | why it was not auto-published (failed rules, warnings) |
 | updateRunId | fk? → UpdateRun | null for manually created updates (admin test data, Phase 8 company submissions) |
 | createdAt | datetime | |
 
@@ -126,6 +128,7 @@ Log of every worker run.
 | id | uuid | |
 | startedAt / finishedAt | datetime | |
 | aiCallsUsed | int | |
+| aiCostUsd | float | estimated AI cost of the run (USD) |
 | itemsChecked | int | sources + products checked |
 | changesFound | int | |
 | sourceChanges | json | `[{ sourceWatchId, label, url }]` pages whose content changed |

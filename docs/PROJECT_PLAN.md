@@ -57,13 +57,15 @@ The admin side is a **web page**: reviewing sources and reading quotes is easier
 **Demo:** run `npm run worker`; see which official pages changed in the `UpdateRun` log.
 
 ## Phase 6 – AI search
-- [ ] Anthropic SDK in the worker, key from `.env`
-- [ ] Prompt + JSON schema from `docs/AI_UPDATE_PIPELINE.md`
-- [ ] Changed official pages from Phase 5 are given to the AI first; findings create `PendingUpdate`s
-- [ ] Validate output with zod; discard invalid output
-- [ ] Diff against current status; only real changes become `PendingUpdate`s
-- [ ] Auto-publish rule for official sources; everything else needs review
-- [ ] Limits: max AI calls per run, timeout, error handling
+- [x] Anthropic SDK in the worker, key from `.env`
+- [x] Prompt + JSON schema from `docs/AI_UPDATE_PIPELINE.md`
+- [x] Changed official pages from Phase 5 are given to the AI first; findings create `PendingUpdate`s
+- [x] Validate output with zod; discard invalid output
+- [x] Diff against current status; only real changes become `PendingUpdate`s
+- [x] Auto-publish rule for official sources; everything else needs review
+- [x] Limits: max AI calls per run, timeout, error handling, cheaper schedule (AI only when an official page changed + weekly full check)
+- [x] End-to-end test with a fake Claude: `npm run ai:fake-run`
+- [ ] Live test with a real API key (`npm run ai:check`, then `npm run ai:test -- solein --spend`) – waiting until a key is added
 
 **Demo:** run the worker; see proposed updates appear in the admin web page with sources.
 

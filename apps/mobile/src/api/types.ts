@@ -70,6 +70,7 @@ export type PendingUpdate = {
   evidenceQuote: string;
   confidence: number | null; // 0–1, AI updates only
   origin: "SOURCE_CHECK" | "AI_SEARCH";
+  checkNotes: string[]; // why it was not published automatically (failed rules, warnings)
   createdAt: string;
 };
 
@@ -79,6 +80,7 @@ export type UpdateRun = {
   startedAt: string;
   finishedAt: string | null; // null while still running (or if it crashed hard)
   aiCallsUsed: number;
+  aiCostUsd: number; // estimate
   itemsChecked: number;
   changesFound: number;
   sourceChanges: { sourceWatchId: string; label: string; url: string }[];

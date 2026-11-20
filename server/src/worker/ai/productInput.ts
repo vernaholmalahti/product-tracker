@@ -1,12 +1,13 @@
 import { prisma } from "../../db/client";
 import type { ProductPromptInput } from "./prompt";
+import { type ChangedPage, relevantChangedPages } from "./schedule";
 
 // Builds what Claude is told about one product: its markets, current stage and the
 // latest known event per market (so it only reports what's newer), plus any official
 // pages that changed in this run (Phase 5 hints) for this product's markets.
 export async function loadProductInput(
   productId: string,
-  changedPages: { label: string; url: string; marketCode: string; productId: string | null }[],
+  changedPages: ChangedPage[],
 ): Promise<ProductPromptInput> {
   const product = await prisma.product.findUniqueOrThrow({
     where: { id: productId },
@@ -21,7 +22,7 @@ export async function loadProductInput(
     },
   });
 
-  const marketCodes = new Set(product.marketStatuses.map((s) => s.marketCode));
+  const marketCodes = product.marketStatuses.map((s) => s.marketCode);
   return {
     slug: product.slug,
     name: product.name,
@@ -40,9 +41,6 @@ export async function loadProductInput(
           : null,
       };
     }),
-    // A changed page is relevant if it's about this product, or a general page for one of its markets.
-    changedOfficialPages: changedPages
-      .filter((page) => page.productId === product.id || (page.productId === null && marketCodes.has(page.marketCode)))
-      .map(({ label, url }) => ({ label, url })),
+    changedOfficialPages: relevantChangedPages(product.id, marketCodes, changedPages).map(({ label, url }) => ({ label, url })),
   };
 }

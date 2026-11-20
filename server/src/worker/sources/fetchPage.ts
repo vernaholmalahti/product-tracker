@@ -29,10 +29,17 @@ function mainContent(html: string): string {
   return match?.[1] ?? html;
 }
 
+export type PageOptions = {
+  // false (default): only <main> – best for change detection (less noise).
+  // true: the whole page – used when checking that a quote really appears on it.
+  wholePage?: boolean;
+};
+
 // Very small HTML → text converter. Good enough for change detection; not a full parser.
-export function htmlToText(html: string): string {
+export function htmlToText(html: string, options: PageOptions = {}): string {
   const withoutComments = html.replace(/<!--[\s\S]*?-->/g, " ");
-  const content = removeElements(mainContent(withoutComments), NOISE_ELEMENTS);
+  const scope = options.wholePage ? withoutComments : mainContent(withoutComments);
+  const content = removeElements(scope, NOISE_ELEMENTS);
   return content
     .replace(/<[^>]+>/g, " ") // drop remaining tags
     .replace(/&[a-z#0-9]+;/gi, (entity) => ENTITIES[entity] ?? " ")
@@ -46,7 +53,7 @@ export function sha256(text: string): string {
 
 // Fetches a page and returns its normalised text and hash. Throws a readable error
 // on timeouts, HTTP errors or unsupported content, so the caller can log it and move on.
-export async function fetchPage(url: string): Promise<FetchedPage> {
+export async function fetchPage(url: string, options: PageOptions = {}): Promise<FetchedPage> {
   const response = await fetch(url, {
     headers: { "User-Agent": USER_AGENT, Accept: "text/html,application/xhtml+xml" },
     signal: AbortSignal.timeout(TIMEOUT_MS), // gives up after 20 s instead of hanging the run
@@ -60,7 +67,7 @@ export async function fetchPage(url: string): Promise<FetchedPage> {
   const body = await response.text();
   if (body.length > MAX_BYTES) throw new Error(`Page too large (${body.length} bytes)`);
 
-  const text = htmlToText(body);
+  const text = htmlToText(body, options);
   if (text.length < 200) throw new Error(`Page has almost no text (${text.length} chars) – blocked or changed layout?`);
   return { text, hash: sha256(text) };
 }

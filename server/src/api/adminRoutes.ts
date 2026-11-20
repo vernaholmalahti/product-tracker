@@ -45,6 +45,7 @@ adminRoutes.get("/admin/pending-updates", async (_req, res) => {
       sourceUrl: update.sourceUrl,
       sourceType: update.sourceType,
       evidenceQuote: update.evidenceQuote,
+      checkNotes: update.checkNotes, // why it was not auto-published
       confidence: update.confidence,
       origin: update.origin,
       createdAt: update.createdAt,

@@ -15,7 +15,9 @@
     "worker": "tsx src/worker/index.ts",
     "worker:daily": "tsx src/worker/index.ts --daily",
     "ai:check": "tsx scripts/aiCheck.ts",
-    "ai:test": "tsx scripts/aiTestProduct.ts"
+    "ai:test": "tsx scripts/aiTestProduct.ts",
+    "test": "tsx --test \"src/**/*.test.ts\"",
+    "ai:fake-run": "tsx scripts/fakeAiRun.ts"
   },
   "type": "commonjs",
   "dependencies": {

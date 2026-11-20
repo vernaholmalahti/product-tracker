@@ -70,6 +70,18 @@ export function PendingUpdateCard({ update, onApprove, onReject }: Props) {
           {update.origin === "AI_SEARCH" ? "AI search" : "Source check"}
           {update.confidence !== null && ` · confidence ${Math.round(update.confidence * 100)}%`}
         </Text>
+
+        {/* Why the worker didn't publish it automatically – tells the admin what to check. */}
+        {update.checkNotes.length > 0 && (
+          <View style={styles.notes}>
+            <Text style={styles.notesTitle}>Not published automatically because:</Text>
+            {update.checkNotes.map((note) => (
+              <Text key={note} style={styles.note}>
+                • {note}
+              </Text>
+            ))}
+          </View>
+        )}
       </View>
 
       {/* Right: decision */}
@@ -175,6 +187,14 @@ const styles = StyleSheet.create({
   },
   source: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.plum, textDecorationLine: "underline" },
   meta: { fontFamily: fonts.regular, fontSize: 13, color: colors.mutedText },
+  notes: {
+    backgroundColor: colors.cream,
+    borderRadius: 8,
+    padding: spacing.sm,
+    gap: 2,
+  },
+  notesTitle: { fontFamily: fonts.semiBold, fontSize: 13, color: colors.plum },
+  note: { fontFamily: fonts.regular, fontSize: 13, color: colors.plum },
   actions: { gap: spacing.sm },
   actionsWide: { width: 220 },
   button: { borderRadius: 999, paddingVertical: spacing.md, alignItems: "center", borderWidth: 2 },

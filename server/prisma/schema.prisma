@@ -69,16 +69,17 @@ enum SourceWatchKind {
 // ─── Products and markets ───────────────────────────────────────────────────
 
 model Product {
-  id               String   @id @default(uuid()) @db.Uuid
-  slug             String   @unique // e.g. "solein", used in URLs
+  id               String    @id @default(uuid()) @db.Uuid
+  slug             String    @unique // e.g. "solein", used in URLs
   name             String
   category         Category
   company          String?
   shortDescription String
   imageUrl         String?
   searchKeywords   String[] // used by the AI search
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  lastAiCheckAt    DateTime? // last AI search for this product (skip if < 20 h ago – cost limit)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   marketStatuses ProductMarketStatus[]
   follows        Follow[]
@@ -156,6 +157,7 @@ model PendingUpdate {
   origin                UpdateOrigin
   status                PendingStatus @default(PENDING)
   reviewNote            String?
+  checkNotes            String[]      @default([]) // why it was NOT auto-published (failed rules, warnings)
   updateRunId           String?       @db.Uuid // null for manually created updates
   createdAt             DateTime      @default(now())
 
@@ -188,6 +190,7 @@ model UpdateRun {
   startedAt     DateTime  @default(now())
   finishedAt    DateTime? // null while the run is still going
   aiCallsUsed   Int       @default(0)
+  aiCostUsd     Float     @default(0) // estimate from token usage (costEstimate.ts)
   itemsChecked  Int       @default(0) // sources (Phase 5) + products (Phase 6) checked
   changesFound  Int       @default(0)
   sourceChanges Json      @default("[]") // [{ sourceWatchId, label, url }] pages whose content changed
