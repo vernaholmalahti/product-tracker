@@ -6,11 +6,13 @@
 |---|---|---|---|---|
 | APPLICATION_SUBMITTED | Novel food application sent to the European Commission | GRAS notice or NDI notification filed with FDA | Application to FSA | Application to SFA |
 | UNDER_ASSESSMENT | EFSA risk assessment ongoing | FDA reviewing | FSA assessing | SFA assessing |
-| POSITIVE_SAFETY_OPINION | EFSA publishes a positive scientific opinion | (self-affirmed GRAS can be shown here with a note) | FSA safety assessment positive | – |
+| POSITIVE_SAFETY_OPINION | EFSA publishes a positive scientific opinion | – (not used, see note below) | FSA safety assessment positive | – |
 | AUTHORISED | Commission implementing act adopted; added to the Union list | FDA "no questions" letter (GRAS) / NDI acknowledged without objection | Authorised in GB | Approved |
 | ON_MARKET | First consumer products on sale | same | same | same |
 
 Explain in the app, in plain language, that a positive safety opinion is **not yet** permission to sell in the EU.
+
+**Self-affirmed GRAS is not a stage (decision 20 Nov 2026).** A US company can conclude with its own expert panel that an ingredient is GRAS and start selling. That is the company's conclusion, not an FDA step, so it doesn't change the stage. Mention it in the summary of the US event instead. Reason: FDA's review of the GRAS notice (`UNDER_ASSESSMENT`) comes *after* self-affirmation in real life, so using `POSITIVE_SAFETY_OPINION` for it would make the FDA steps look like a move backwards.
 
 **Label for US supplement ingredients:** FDA does not "authorise" supplement ingredients. For a `SUPPLEMENT_INGREDIENT` in the US, the stage `AUTHORISED` is stored as normal but the app shows the label **"Allowed in supplements"** instead of "Authorised".
 
@@ -49,7 +51,7 @@ Protein powder made from microbes grown using CO₂ and hydrogen (gas fermentati
 | Market | Stage | Event | Date | Source |
 |---|---|---|---|---|
 | SG | ON_MARKET | Approved as novel food in Singapore; products later launched (e.g. with Ajinomoto) | Sep 2022 | foodbev.com / Solar Foods press releases |
-| US | POSITIVE_SAFETY_OPINION (note: self-affirmed GRAS) | Self-affirmed GRAS status; GRAS notice filed with FDA, "no questions" letter pending | Sep 2024 | proteinproductiontechnology.com, foodbusinessmea.com |
+| US | APPLICATION_SUBMITTED | GRAS notice filed with FDA, "no questions" letter pending. Summary mentions self-affirmed GRAS since Sep 2024 (company conclusion, not a stage) | 2025-09-16 | Solar Foods press release |
 | EU | APPLICATION_SUBMITTED | Novel food application submitted | 2021-10-29 | proteinproductiontechnology.com |
 | EU | POSITIVE_SAFETY_OPINION | EFSA positive safety opinion published; Commission vote next. Company estimate: authorisation Jun–Aug 2027. Fazer ready to launch products after approval. | Nov 2026 | foodingredientsfirst.com/news/solar-foods-efsa-solein-fazer.html |
 

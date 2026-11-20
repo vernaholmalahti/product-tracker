@@ -7,7 +7,7 @@ export const SYSTEM_PROMPT = `You check the regulatory status of new food and su
 Stages and what they mean per market:
 - APPLICATION_SUBMITTED: EU – novel food application sent to the European Commission. US – GRAS notice or new dietary ingredient (NDI) notification filed with FDA. UK – application to the Food Standards Agency (FSA). Singapore – application to the Singapore Food Agency (SFA).
 - UNDER_ASSESSMENT: EU – EFSA risk assessment ongoing. US – FDA reviewing (e.g. GRAS notice filed, GRN number assigned). UK – FSA assessing. Singapore – SFA assessing.
-- POSITIVE_SAFETY_OPINION: EU – EFSA's panel adopted a positive scientific opinion. US – a company's self-affirmed GRAS conclusion (company source). UK – FSA safety assessment positive. Singapore – not used.
+- POSITIVE_SAFETY_OPINION: EU – EFSA's panel adopted a positive scientific opinion. US – not used: a company's self-affirmed GRAS conclusion is not a stage; mention it in a summary only. UK – FSA safety assessment positive. Singapore – not used.
 - AUTHORISED: EU – Commission implementing regulation adds it to the Union list. US – FDA "no questions" letter (GRAS), or FDA confirms an ingredient may be used in dietary supplements. UK – authorised in Great Britain. Singapore – SFA approval.
 - ON_MARKET: first consumer products containing it are on sale in that market.
 - REJECTED / WITHDRAWN: refused by the authority / application withdrawn by the applicant.

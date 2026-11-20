@@ -75,18 +75,19 @@ const products: SeedProduct[] = [
       },
       {
         marketCode: "US",
-        currentStage: "POSITIVE_SAFETY_OPINION",
+        currentStage: "APPLICATION_SUBMITTED",
         expectedNext: "Company estimate: FDA \"no questions\" letter by the end of 2026",
         events: [
           {
-            stage: "POSITIVE_SAFETY_OPINION",
-            date: "2024-09-02",
+            // Self-affirmed GRAS (Sep 2024) is not a stage – CONTENT_GUIDELINES.md, decision 20 Nov 2026.
+            stage: "APPLICATION_SUBMITTED",
+            date: "2025-09-16",
             precision: "DAY",
-            title: "Solein reaches self-affirmed GRAS status",
+            title: "Solar Foods files GRAS notice with the FDA",
             summary:
-              "An independent expert panel concluded Solein is generally recognised as safe (GRAS). This is the company's own conclusion, not an FDA decision. Solar Foods filed a GRAS notice with the FDA in September 2025; the FDA's answer is pending.",
+              "Solar Foods asked the FDA to review its conclusion that Solein is generally recognised as safe (GRAS). Since September 2024 Solein has had self-affirmed GRAS status – the company's own expert conclusion, not an FDA decision – which allows it to be sold in the US.",
             sourceUrl:
-              "https://solarfoods.com/solar-foods-obtains-self-affirmed-gras-status-for-solein-in-the-united-states/",
+              "https://solarfoods.com/solar-foods-has-submitted-a-gras-notification-on-solein-in-the-united-states-to-obtain-a-no-questions-letter-from-the-fda/",
             sourceType: "COMPANY",
           },
         ],
